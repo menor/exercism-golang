@@ -4,6 +4,7 @@ import "strings"
 
 func IsPangram(s string) bool {
 	var counter = generateAlphabetCounter()
+
 	s = strings.ToLower(s)
 
 	for _, r := range s {
