@@ -5,6 +5,7 @@ import (
 	"unicode"
 )
 
+// Valid checks if a string is valid per the Luhn formula
 func Valid(s string) bool {
 	s = strings.ReplaceAll(s, " ", "")
 
