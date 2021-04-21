@@ -17,33 +17,32 @@ func Valid(s string) bool {
 
 	var num int
 
-	for i, char := range s {
+	shouldDouble := length%2 == 0
+
+	for _, char := range s {
 		if !unicode.IsDigit(char) {
 			return false
 		}
 
 		value := int(char - '0')
 
-		if shouldDouble(length, i) {
+		if shouldDouble {
 			value = doubleAndReduce(value)
 		}
 
 		num += value
+		shouldDouble = !shouldDouble
 	}
 
 	return num%10 == 0
 }
 
 func doubleAndReduce(n int) int {
-	n = n * 2
+	n *= 2
 
 	if n > 9 {
-		n = n - 9
+		n -= 9
 	}
 
 	return n
-}
-
-func shouldDouble(length, position int) bool {
-	return length%2 == position%2
 }
