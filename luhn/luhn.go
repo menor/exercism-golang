@@ -9,15 +9,13 @@ import (
 func Valid(s string) bool {
 	s = strings.ReplaceAll(s, " ", "")
 
-	length := len(s)
-
-	if length <= 1 {
+	if len(s) <= 1 {
 		return false
 	}
 
 	var num int
 
-	shouldDouble := length%2 == 0
+	shouldDouble := len(s)%2 == 0
 
 	for _, char := range s {
 		if !unicode.IsDigit(char) {
@@ -27,7 +25,11 @@ func Valid(s string) bool {
 		value := int(char - '0')
 
 		if shouldDouble {
-			value = doubleAndReduce(value)
+			value *= 2
+
+			if value > 9 {
+				value -= 9
+			}
 		}
 
 		num += value
@@ -35,14 +37,4 @@ func Valid(s string) bool {
 	}
 
 	return num%10 == 0
-}
-
-func doubleAndReduce(n int) int {
-	n *= 2
-
-	if n > 9 {
-		n -= 9
-	}
-
-	return n
 }
