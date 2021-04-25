@@ -4,27 +4,39 @@ import (
 	"strconv"
 )
 
+// AABBBCCCC
+
 func RunLengthEncode(s string) string {
 	if len(s) < 1 {
 		return s
 	}
 
 	var result string
-	runes := []rune(s)
-	previous := runes[0]
-	count := 1
+	var previous rune
+	count := 0
 
-	for _, l := range runes {
-		if l == previous {
+	for i, l := range s {
+
+		if i+1 == len(s) {
 			count++
-		} else {
+		}
+
+		if i != 0 && (l != previous || i+1 == len(s)) {
+
 			if count < 2 {
-				result = result + string(l)
+				result = result + string(previous)
 			} else {
-				result = result + strconv.Itoa(count) + string(l)
+				result = result + strconv.Itoa(count) + string(previous)
 			}
-			count = 0
+
 			previous = l
+			count = 1
+
+		} else {
+
+			count++
+			previous = l
+
 		}
 
 	}
