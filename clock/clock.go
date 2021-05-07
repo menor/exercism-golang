@@ -2,7 +2,7 @@ package clock
 
 import "fmt"
 
-// Clock represents a cloock with its hours and minutes as int
+// Clock represents a clock with its hours and minutes as int
 type Clock struct {
 	hours   int
 	minutes int
@@ -21,22 +21,10 @@ func New(h, m int) Clock {
 }
 
 func (c Clock) String() string {
-	var hours string
-	var minutes string
+	h := fmt.Sprintf("%02d", c.hours)
+	m := fmt.Sprintf("%02d", c.minutes)
 
-	if c.hours < 10 {
-		hours = fmt.Sprintf("0%d", c.hours)
-	} else {
-		hours = fmt.Sprint(c.hours)
-	}
-
-	if c.minutes < 10 {
-		minutes = fmt.Sprintf("0%d", c.minutes)
-	} else {
-		minutes = fmt.Sprint(c.minutes)
-	}
-
-	return hours + ":" + minutes
+	return h + ":" + m
 }
 
 // Add takes a number of minuts and adds them to a Clock time
