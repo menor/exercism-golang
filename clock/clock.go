@@ -20,6 +20,7 @@ func New(h, m int) Clock {
 	return c
 }
 
+// String returns a string representation of a clock formatted as hh:mm
 func (c Clock) String() string {
 	h := fmt.Sprintf("%02d", c.hours)
 	m := fmt.Sprintf("%02d", c.minutes)
