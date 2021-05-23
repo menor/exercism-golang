@@ -2,6 +2,7 @@ package encode
 
 import (
 	"strconv"
+	"unicode"
 )
 
 // AABBBCCCC
@@ -44,5 +45,31 @@ func RunLengthEncode(s string) string {
 }
 
 func RunLengthDecode(s string) string {
-	return s
+	if len(s) < 1 {
+		return s
+	}
+
+	var result string
+	count := "0"
+
+	for _, c := range s {
+		if unicode.IsDigit(c) {
+			count += string(c)
+		} else {
+			if count == "0" {
+				result += string(c)
+			} else {
+				repeats, _ := strconv.Atoi(count)
+
+				for i := 0; i < repeats; i++ {
+					result += string(c)
+				}
+
+				count = "0"
+			}
+
+		}
+	}
+
+	return result
 }
