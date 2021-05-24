@@ -5,18 +5,22 @@ import (
 	"sort"
 )
 
+// Record is an unsorted post
 type Record struct {
 	ID     int
 	Parent int
 }
 
+// Node represents a a record once inserted in the tree
 type Node struct {
 	ID       int
 	Children []*Node
 }
 
-const rootId = 0
+const rootID = 0
 
+// Build takes a slice of records an constructs a tree based
+// on the information those records contain
 func Build(records []Record) (*Node, error) {
 
 	sort.Slice(records, func(i, j int) bool { return records[i].ID < records[j].ID })
@@ -24,7 +28,7 @@ func Build(records []Record) (*Node, error) {
 	tree := make(map[int]*Node)
 
 	for i, r := range records {
-		noRootNode := i != rootId
+		noRootNode := i != rootID
 		rootNodeHasParent := r.Parent > i
 		noPreviousNode := i != r.ID
 		nodeIsItsOwnParent := (noRootNode && r.Parent == i)
@@ -39,5 +43,5 @@ func Build(records []Record) (*Node, error) {
 		tree[i] = n
 	}
 
-	return tree[rootId], nil
+	return tree[rootID], nil
 }
