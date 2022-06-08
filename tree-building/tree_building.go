@@ -17,8 +17,6 @@ type Node struct {
 	Children []*Node
 }
 
-const rootID = 0
-
 // Build takes a slice of records an constructs a tree based
 // on the information those records contain
 func Build(records []Record) (*Node, error) {
@@ -28,20 +26,18 @@ func Build(records []Record) (*Node, error) {
 	tree := make(map[int]*Node)
 
 	for i, r := range records {
-		noRootNode := i != rootID
-		rootNodeHasParent := r.Parent > i
-		noPreviousNode := i != r.ID
-		nodeIsItsOwnParent := (noRootNode && r.Parent == i)
 
-		if noPreviousNode || rootNodeHasParent || nodeIsItsOwnParent {
+		if i != r.ID || r.Parent > i || i != 0 && r.Parent == i {
 			return nil, fmt.Errorf("invalid record: %+v", r)
 		}
+
 		n := &Node{ID: r.ID}
+
 		if r.ID > 0 {
 			tree[r.Parent].Children = append(tree[r.Parent].Children, n)
 		}
 		tree[i] = n
 	}
 
-	return tree[rootID], nil
+	return tree[0], nil
 }
